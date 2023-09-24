@@ -7,6 +7,12 @@ import Game from '@/components/Game'
 </template>
 
 <style lang="scss">
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
 body {
   height: 100vh;
   display: flex;

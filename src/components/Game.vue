@@ -8,7 +8,7 @@ import PhaserContainer from '@/components/PhaserContainer'
 
     <template #fallback>
       <div class="placeholder">
-        Downloading ...
+        로딩 중 ...
       </div>
     </template>
   </Suspense>
