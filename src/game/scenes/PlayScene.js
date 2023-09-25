@@ -1,4 +1,5 @@
 import { Scene } from 'phaser'
+import Slime from '../objects/Slime'
 
 export default class PlayScene extends Scene {
 
@@ -31,31 +32,40 @@ export default class PlayScene extends Scene {
 
     // 캐릭터 스폰
     this.faune = this.physics.add.sprite(120, 120, 'faune')
-    this.physics.add.collider(this.faune, wallLayer)
     this.faune.body.setSize(this.faune.body.width * 0.4, this.faune.body.height * 0.5)
     this.faune.body.offset.y = 20
 
-    // 슬라임 스폰
-    this.slime = this.physics.add.sprite(250, 120, 'slime')
-    this.physics.add.collider(this.slime, wallLayer)
-    this.slime.body.setSize(this.slime.body.width, this.slime.body.height)
-    
-
     // 카메라 팔로잉
     this.cameras.main.startFollow(this.faune, true)
+
+    // 슬라임 스폰
+    const slime = this.physics.add.group({
+      classType: Slime,
+      createCallback: (go) => {
+        go.body.onCollide = true
+      }
+    })
+    slime.get(250, 120, 'slime')
+
+    // 충돌 설정
+    this.physics.add.collider(this.faune, wallLayer)
+    this.physics.add.collider(slime, wallLayer)
+    this.physics.add.collider(slime, this.faune, this.handlePlayerMobCollision, undefined, this)
+  }
+
+  // 몬스터와 충돌할 때
+  handlePlayerMobCollision(player, slime) {
+    const dx = this.faune.x - slime.x
+    const dy = this.faune.y - slime.y
+
+    const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200)
+    this.faune.setVelocity(dir.x, dir.y)
   }
 
   update (t, dt) {
     if (!this.cursors.up || !this.faune) {
       return
     }
-
-    this.slime.anims.play({
-      key: 'slime_idle',
-      repeat: -1,
-      frameRate: 15,
-      duration: 100
-    }, true)
 
     const speed = 250
     if (this.cursors.left?.isDown) {
@@ -75,7 +85,7 @@ export default class PlayScene extends Scene {
       this.fauneAnim('run', 'down')
       this.faune.setVelocity(0, speed)
     } else {
-      this.fauneAnim('idle', this.lastKey)
+      this.fauneAnim('idle', this.lastKey ?? 'down')
       this.faune.setVelocity(0, 0)
     }
   }
