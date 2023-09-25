@@ -11,28 +11,17 @@ export default class PlayScene extends Scene {
   }
 
   create () {
-    // 카메라 설정
-    // this.cameras.main.setOrigin(0)
-
-
-    const scale = 4
-    const backgroundPosition = { x: 0, y: 0 }
-    const playerPosition = { x: 480, y: 200 }
     
     // 맵 생성
-    // this.add.image(
-    //   backgroundPosition.x,
-    //   backgroundPosition.y, 
-    //   'tiles')
     const map = this.make.tilemap( {key: 'dungeon'} )
     const tileset = map.addTilesetImage('dungeon', 'tiles')
-
     map.createLayer('Ground', tileset)
     const wallLayer = map.createLayer('Wall', tileset)
 
     // 충돌 설정
     wallLayer.setCollisionByProperty({ collides: true })
 
+    // 디버깅
     const debugGraphicsLayer = this.add.graphics().setAlpha(0.7)
     wallLayer.renderDebug(debugGraphicsLayer, {
       tileColor: null,
@@ -40,11 +29,19 @@ export default class PlayScene extends Scene {
       faceColor: new Phaser.Display.Color(40, 39, 37, 255)
     })
 
-    // 캐릭터 설정
-    this.faune = this.physics.add.sprite(120, 120, 'faune', 'faune-idle-down')
+    // 캐릭터 스폰
+    this.faune = this.physics.add.sprite(120, 120, 'faune')
     this.physics.add.collider(this.faune, wallLayer)
     this.faune.body.setSize(this.faune.body.width * 0.4, this.faune.body.height * 0.5)
     this.faune.body.offset.y = 20
+
+    // 슬라임 스폰
+    this.slime = this.physics.add.sprite(250, 120, 'slime')
+    this.physics.add.collider(this.slime, wallLayer)
+    this.slime.body.setSize(this.slime.body.width, this.slime.body.height)
+    
+
+    // 카메라 팔로잉
     this.cameras.main.startFollow(this.faune, true)
   }
 
@@ -52,6 +49,13 @@ export default class PlayScene extends Scene {
     if (!this.cursors.up || !this.faune) {
       return
     }
+
+    this.slime.anims.play({
+      key: 'slime_idle',
+      repeat: -1,
+      frameRate: 15,
+      duration: 100
+    }, true)
 
     const speed = 250
     if (this.cursors.left?.isDown) {
