@@ -1,6 +1,10 @@
 import { Scene } from 'phaser'
 import TileImageSource from '@/game/assets/tiles/dungeon_1.png'
 import Dungeon from '@/game/assets/tiles/dungeon.json'
+
+import TileSecond from '@/game/assets/tiles/second.png'
+import SecondRoom from '@/game/assets/tiles/second.json'
+
 import FaunePng from '@/game/assets/character/faune.png'
 import FauneJson from '@/game/assets/character/faune.json'
 import SlimePng from '@/game/assets/enermies/slime.png'
@@ -21,7 +25,9 @@ export default class BootScene extends Scene {
   preload () {
     // 맵 로딩
     this.load.image('tiles', TileImageSource)
+    this.load.image('tiles2', TileSecond)
     this.load.tilemapTiledJSON('dungeon', Dungeon)
+    this.load.tilemapTiledJSON('second', SecondRoom)
 
     // 스프라이트 로딩
     this.load.aseprite('faune', FaunePng, FauneJson)

@@ -31,6 +31,8 @@ export default class PlayScene extends Scene {
     map.createLayer('Ground', tileset)
     const wallLayer = map.createLayer('Wall', tileset)
     wallLayer.setCollisionByProperty({ collides: true })
+    const portalLayer = map.createLayer('Portal', tileset)
+    portalLayer.setCollisionByProperty({ collides: true })
 
     // 무기 생성
     this._weapons = this.physics.add.group({
@@ -75,8 +77,11 @@ export default class PlayScene extends Scene {
 
     // 충돌 설정 - 맵
     this.physics.add.collider(this.faune, wallLayer)
+    this.physics.add.collider(this.faune, portalLayer, this.handlePortal, undefined, this)
     this.physics.add.collider(this._slimes, wallLayer)
+    this.physics.add.collider(this._slimes, portalLayer)
     this.physics.add.collider(this._demons, wallLayer)
+    this.physics.add.collider(this._demons, portalLayer)
     this.physics.add.collider(this._weapons, wallLayer, this.handleBombWallCollision, undefined, this)
 
     // 충돌 설정 - 상자
@@ -95,9 +100,17 @@ export default class PlayScene extends Scene {
     // this.physics.add.collider()
   }
 
+  // 포탈에 닿았을때 
+  handlePortal(player, portal) {
+    console.log('portal', portal)
+    this.faune.setTint(0x333)
+    // this.scene.start('SecondScene')
+  }
+
   // 무기와 벽 충돌 시
   handleBombWallCollision(bomb, wall) {
     this._weapons.killAndHide(bomb)
+    this.scene.start('SecondScene')
   }
 
   // 무기와 슬라임 충돌 시 

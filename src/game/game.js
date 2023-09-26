@@ -2,6 +2,7 @@ import Phaser from 'phaser'
 import BootScene from '@/game/scenes/BootScene'
 import PlayScene from '@/game/scenes/PlayScene'
 import GameUi from './scenes/GameUi'
+import SecondScene from './scenes/SecondScene'
 
 function launch(containerId) {
   return new Phaser.Game({
@@ -15,10 +16,10 @@ function launch(containerId) {
         gravity: {
           y: 0,
         },
-        debug: false
+        debug: true
       }
     },
-    scene: [BootScene, PlayScene, GameUi]
+    scene: [BootScene, PlayScene, SecondScene, GameUi]
   })
 }
 
