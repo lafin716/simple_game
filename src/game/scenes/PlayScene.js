@@ -34,7 +34,8 @@ export default class PlayScene extends Scene {
 
     // 무기 생성
     this._weapons = this.physics.add.group({
-      classType: Phaser.Physics.Arcade.Image
+      classType: Phaser.Physics.Arcade.Image,
+      maxSize: 3
     })
 
     // 보물상자 생성 

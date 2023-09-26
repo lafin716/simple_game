@@ -37,6 +37,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     if (!this._weapon) {
       return
     }
+    const weapon = this._weapon.get(this.x, this.y, 'bomb')
+    if (!weapon) {
+      return
+    }
 
     const dir = this.lastKey// this.anims.currentAnim.key.split('-')[2]
     const vec = new Phaser.Math.Vector2(0, 0)
@@ -58,8 +62,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         break
     }
 
-    const angle = vec.angle()
-    const weapon = this._weapon.get(this.x, this.y, 'bomb')
+    const angle = vec.angle()    
     weapon.setActive(true)
     weapon.setVisible(true)
     weapon.setRotation(angle)
