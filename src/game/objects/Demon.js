@@ -1,7 +1,7 @@
 import Phaser from "phaser"
 import { Direction, randomDirection } from "@/game/consts/move"
 
-export default class Slime extends Phaser.Physics.Arcade.Sprite {
+export default class Demon extends Phaser.Physics.Arcade.Sprite {
 
   _direction = Direction.RIGHT
   _moveEvent = Phaser.Time.TimerEvent
@@ -15,7 +15,7 @@ export default class Slime extends Phaser.Physics.Arcade.Sprite {
   ) {
     super(scene, x, y, texture, frame)
     this.anims.play({
-      key: 'slime_idle',
+      key: 'demon-idle',
       repeat: -1
     }, true)
 
@@ -51,12 +51,12 @@ export default class Slime extends Phaser.Physics.Arcade.Sprite {
 
     if (this._direction === Direction.STOP) {
       this.anims.play({
-        key: 'slime_idle',
+        key: 'demon-idle',
         repeat: -1
       }, true)
     } else {
       this.anims.play({
-        key: 'slime_jump',
+        key: 'demon-run',
         repeat: -1
       }, true)
     }
@@ -87,7 +87,6 @@ export default class Slime extends Phaser.Physics.Arcade.Sprite {
         this.body.offset.x = 0
         this.setVelocity(0, 0)
         break
-    
     }
   }
 

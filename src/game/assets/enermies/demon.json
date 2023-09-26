@@ -1,0 +1,79 @@
+{ "frames": {
+   "0": {
+    "frame": { "x": 0, "y": 0, "w": 26, "h": 34 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 3, "y": 2, "w": 26, "h": 34 },
+    "sourceSize": { "w": 32, "h": 36 },
+    "duration": 100
+   },
+   "1": {
+    "frame": { "x": 26, "y": 0, "w": 26, "h": 34 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 3, "y": 2, "w": 26, "h": 34 },
+    "sourceSize": { "w": 32, "h": 36 },
+    "duration": 100
+   },
+   "2": {
+    "frame": { "x": 52, "y": 0, "w": 26, "h": 34 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 3, "y": 2, "w": 26, "h": 34 },
+    "sourceSize": { "w": 32, "h": 36 },
+    "duration": 100
+   },
+   "3": {
+    "frame": { "x": 0, "y": 34, "w": 26, "h": 34 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 3, "y": 2, "w": 26, "h": 34 },
+    "sourceSize": { "w": 32, "h": 36 },
+    "duration": 100
+   },
+   "4": {
+    "frame": { "x": 26, "y": 34, "w": 26, "h": 34 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 3, "y": 2, "w": 26, "h": 34 },
+    "sourceSize": { "w": 32, "h": 36 },
+    "duration": 100
+   },
+   "5": {
+    "frame": { "x": 52, "y": 34, "w": 26, "h": 34 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 3, "y": 2, "w": 26, "h": 34 },
+    "sourceSize": { "w": 32, "h": 36 },
+    "duration": 100
+   },
+   "6": {
+    "frame": { "x": 0, "y": 68, "w": 26, "h": 34 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 3, "y": 2, "w": 26, "h": 34 },
+    "sourceSize": { "w": 32, "h": 36 },
+    "duration": 100
+   },
+   "7": {
+    "frame": { "x": 26, "y": 68, "w": 26, "h": 34 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 3, "y": 2, "w": 26, "h": 34 },
+    "sourceSize": { "w": 32, "h": 36 },
+    "duration": 100
+   }
+ },
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.2.40-x64",
+  "image": "demon.png",
+  "format": "RGBA8888",
+  "size": { "w": 78, "h": 102 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "demon-idle", "from": 0, "to": 3, "direction": "forward" },
+   { "name": "demon-run", "from": 4, "to": 7, "direction": "forward" }
+  ]
+ }
+}

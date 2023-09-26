@@ -1,5 +1,7 @@
 import { Scene } from 'phaser'
 import Slime from '../objects/Slime'
+import Player from '../objects/Player'
+import Demon from '../objects/Demon'
 
 export default class PlayScene extends Scene {
 
@@ -31,9 +33,7 @@ export default class PlayScene extends Scene {
     })
 
     // 캐릭터 스폰
-    this.faune = this.physics.add.sprite(120, 120, 'faune')
-    this.faune.body.setSize(this.faune.body.width * 0.4, this.faune.body.height * 0.5)
-    this.faune.body.offset.y = 20
+    this.faune = this.add.faune(120, 120, 'faune')
 
     // 카메라 팔로잉
     this.cameras.main.startFollow(this.faune, true)
@@ -47,10 +47,21 @@ export default class PlayScene extends Scene {
     })
     slime.get(250, 120, 'slime')
 
+    // 데몬 스폰
+    const demon = this.physics.add.group({
+      classType: Demon,
+      createCallback: (go) => {
+        go.body.onCollide = true
+      }
+    })
+    demon.get(450, 320, 'demon')
+
     // 충돌 설정
     this.physics.add.collider(this.faune, wallLayer)
     this.physics.add.collider(slime, wallLayer)
+    this.physics.add.collider(demon, wallLayer)
     this.physics.add.collider(slime, this.faune, this.handlePlayerMobCollision, undefined, this)
+    this.physics.add.collider(demon, this.faune, this.handlePlayerMobCollision, undefined, this)
   }
 
   // 몬스터와 충돌할 때
@@ -59,54 +70,13 @@ export default class PlayScene extends Scene {
     const dy = this.faune.y - slime.y
 
     const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200)
-    this.faune.setVelocity(dir.x, dir.y)
+    this.faune.handleDamage(dir)
   }
 
   update (t, dt) {
-    if (!this.cursors.up || !this.faune) {
-      return
-    }
-
-    const speed = 250
-    if (this.cursors.left?.isDown) {
-      this.lastKey = 'left'
-      this.fauneAnim('run', 'left')
-      this.faune.setVelocity(-speed, 0)
-    } else if (this.cursors.right?.isDown) {
-      this.lastKey = 'right'
-      this.fauneAnim('run', 'right')
-      this.faune.setVelocity(speed, 0)
-    } else if (this.cursors.up?.isDown) {
-      this.lastKey = 'up'
-      this.fauneAnim('run', 'up')
-      this.faune.setVelocity(0, -speed)
-    } else if (this.cursors.down?.isDown) {
-      this.lastKey = 'down'
-      this.fauneAnim('run', 'down')
-      this.faune.setVelocity(0, speed)
-    } else {
-      this.fauneAnim('idle', this.lastKey ?? 'down')
-      this.faune.setVelocity(0, 0)
+    if (this.faune) {
+      this.faune.update(this.cursors)
     }
   }
-
-  fauneAnim (mode, direction) {
-    this.faune.scaleX = direction === 'left' 
-      ? -1 : 1
-
-    if (direction === 'left') {
-      this.faune.body.offset.x = 68
-    } else {
-      this.faune.body.offset.x = 30
-    }
-
-    const dir = direction === 'left' || direction === 'right'
-      ? 'side'
-      : direction
-    this.faune.anims.play({
-      key: `faune-${mode}-${dir}`,
-      repeat: -1,
-      frameRate: 15,
-    }, true)
-  }
+  
 }
