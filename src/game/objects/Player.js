@@ -13,12 +13,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   _healthStatus = HealthStatus.IDLE
   _damageTime = 0
   _health = 3
+  _weapon = null
   _chest = null
   _coins = 0
 
   constructor(scene, x, y, texture, frame) {
     super(scene, x, y, texture, frame)
-
   }
 
   get _health() {
@@ -27,6 +27,43 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
   setChest(chest) {
     this._chest = chest
+  }
+
+  setWeapon(weapon) {
+    this._weapon = weapon
+  }
+
+  throwWeapon() {
+    if (!this._weapon) {
+      return
+    }
+
+    const dir = this.lastKey// this.anims.currentAnim.key.split('-')[2]
+    const vec = new Phaser.Math.Vector2(0, 0)
+    switch(dir) {
+      case 'up':
+        vec.y = -1
+        break
+      case 'down':
+        vec.y = 1
+        break
+      case 'left':
+        vec.x = -1
+        break
+      case 'right':
+        vec.x = 1
+        break
+      default:
+        vec.y = 1
+        break
+    }
+
+    const angle = vec.angle()
+    const weapon = this._weapon.get(this.x, this.y, 'bomb')
+    weapon.setActive(true)
+    weapon.setVisible(true)
+    weapon.setRotation(angle)
+    weapon.setVelocity(vec.x * 300, vec.y * 300)
   }
 
   handleDamage(dir) {
@@ -65,6 +102,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         break
       case HealthStatus.DEAD:
         this.setTint(0xffffff)
+        this.setVelocity(0, 0)
     }
   }
 
@@ -81,6 +119,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       if (this._chest) {
         this._coins += this._chest.open()
         sceneEvents.emit('player-coins-changed', this._coins)
+      } else {
+        this.throwWeapon()
       }
 
       return

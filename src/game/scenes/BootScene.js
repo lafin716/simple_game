@@ -12,7 +12,7 @@ import ChestJson from '@/game/assets/objects/chest.json'
 import UiHeartEmpty from '@/game/assets/ui/ui_heart_empty.png'
 import UiHeartHalf from '@/game/assets/ui/ui_heart_half.png'
 import UiHeartFull from '@/game/assets/ui/ui_heart_full.png'
-
+import BombPng from '@/game/assets/objects/bomb.png'
 export default class BootScene extends Scene {
   constructor () {
     super({ key: 'BootScene' })
@@ -33,6 +33,8 @@ export default class BootScene extends Scene {
     this.load.image('ui-heart-empty', UiHeartEmpty)
     this.load.image('ui-heart-half', UiHeartHalf)
     this.load.image('ui-heart-full', UiHeartFull)
+    this.load.image('bomb', BombPng)
+
   }
 
   create () {
