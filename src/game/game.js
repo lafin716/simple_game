@@ -1,12 +1,13 @@
 import Phaser from 'phaser'
 import BootScene from '@/game/scenes/BootScene'
 import PlayScene from '@/game/scenes/PlayScene'
+import GameUi from './scenes/GameUi'
 
 function launch(containerId) {
   return new Phaser.Game({
     type: Phaser.AUTO,
-    width: 1280,
-    height: 600,
+    width: window.innerWidth,
+    height: window.innerHeight,
     parent: containerId,
     physics: {
       default: 'arcade',
@@ -14,10 +15,10 @@ function launch(containerId) {
         gravity: {
           y: 0,
         },
-        debug: true
+        debug: false
       }
     },
-    scene: [BootScene, PlayScene]
+    scene: [BootScene, PlayScene, GameUi]
   })
 }
 
