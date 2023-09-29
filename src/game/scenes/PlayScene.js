@@ -104,13 +104,12 @@ export default class PlayScene extends Scene {
   handlePortal(player, portal) {
     console.log('portal', portal)
     this.faune.setTint(0x333)
-    // this.scene.start('SecondScene')
+    this.scene.start('SecondScene')
   }
 
   // 무기와 벽 충돌 시
   handleBombWallCollision(bomb, wall) {
     this._weapons.killAndHide(bomb)
-    this.scene.start('SecondScene')
   }
 
   // 무기와 슬라임 충돌 시 

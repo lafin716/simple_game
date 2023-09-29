@@ -20,8 +20,14 @@ export default class SecondScene extends Scene {
     const wallLayer = map.createLayer('Wall', tileset)
     wallLayer.setCollisionByProperty({ collides: true })
 
+    // 무기 생성
+    this._weapons = this.physics.add.group({
+      classType: Phaser.Physics.Arcade.Image,
+      maxSize: 3
+    })
+    
     // 캐릭터 스폰
-    this.faune = this.add.faune(120, 120, 'faune')
+    this.faune = this.add.faune(50, 50, 'faune')
     this.faune.setWeapon(this._weapons)
 
     // 카메라 팔로잉
